@@ -11,12 +11,9 @@ import getRandomImage from "../utils/getRandomImage";
 export default function CreateEvent() {
   const { data: account } = useAccount();
 
-  const [eventName, setEventName] = useState("");
-  const [eventDate, setEventDate] = useState("");
-  const [eventTime, setEventTime] = useState("");
-  const [maxCapacity, setMaxCapacity] = useState("");
-  const [refund, setRefund] = useState("");
-  const [eventLink, setEventLink] = useState("");
+  const [courseName, setcourseName] = useState("");
+  const [releaseDate, setreleaseDate] = useState("");
+  const [courseCID, setcourseCID] = useState("");
   const [eventDescription, setEventDescription] = useState("");
 
   const [success, setSuccess] = useState(null);
@@ -28,9 +25,9 @@ export default function CreateEvent() {
     e.preventDefault();
 
     const body = {
-      name: eventName,
+      name: courseName,
       description: eventDescription,
-      link: eventLink,
+      link: courseCID,
       image: getRandomImage(),
     };
 
@@ -61,8 +58,8 @@ export default function CreateEvent() {
 
       if (rsvpContract) {
         let deposit = ethers.utils.parseEther(refund);
-        let eventDateAndTime = new Date(`${eventDate} ${eventTime}`);
-        let eventTimestamp = eventDateAndTime.getTime();
+        let releaseDateAndTime = new Date(`${releaseDate} ${eventTime}`);
+        let eventTimestamp = releaseDateAndTime.getTime();
         let eventDataCID = cid;
 
         const txn = await rsvpContract.createNewEvent(
@@ -105,7 +102,7 @@ export default function CreateEvent() {
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
       <Head>
-        <title>Create your event | web3rsvp</title>
+        <title>Create your course</title>
         <meta
           name="description"
           content="Create your virtual event on the blockchain"
@@ -138,7 +135,7 @@ export default function CreateEvent() {
         )}
         {!success && (
           <h1 className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl md:text-5xl mb-4">
-            Create your virtual event
+          Create Your Course
           </h1>
         )}
         {account && !success && (
@@ -149,25 +146,44 @@ export default function CreateEvent() {
             <div className="space-y-6 sm:space-y-5">
               <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
                 <label
-                  htmlFor="eventname"
+                  htmlFor="courseName"
                   className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                  required
                 >
-                  Event name
+                  Course Name
                 </label>
                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                   <input
-                    id="event-name"
-                    name="event-name"
+                    id="courseName"
+                    name="courseName"
                     type="text"
                     className="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
                     required
-                    value={eventName}
-                    onChange={(e) => setEventName(e.target.value)}
+                    value={courseName}
+                    onChange={(e) => setcourseName(e.target.value)}
                   />
                 </div>
               </div>
-
               <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
+                <label
+                  htmlFor="Author"
+                  className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                >
+                  Author
+                </label>
+                <div className="mt-1 sm:mt-0 sm:col-span-2">
+                  <input
+                    id="author"
+                    name="author"
+                    type="text"
+                    className="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
+                    required
+                    value={courseName}
+                    onChange={(e) => setcourseName(e.target.value)}
+                  />
+                </div>
+              </div>
+              {/* <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
                 <label
                   htmlFor="date"
                   className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
@@ -185,8 +201,8 @@ export default function CreateEvent() {
                       type="date"
                       className="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border border-gray-300 rounded-md"
                       required
-                      value={eventDate}
-                      onChange={(e) => setEventDate(e.target.value)}
+                      value={releaseDate}
+                      onChange={(e) => setreleaseDate(e.target.value)}
                     />
                   </div>
                   <div className="w-1/2">
@@ -196,83 +212,27 @@ export default function CreateEvent() {
                       type="time"
                       className="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border border-gray-300 rounded-md"
                       required
-                      value={eventTime}
                       onChange={(e) => setEventTime(e.target.value)}
                     />
                   </div>
                 </div>
-              </div>
+              </div> */}
 
-              <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
-                <label
-                  htmlFor="max-capacity"
-                  className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-                >
-                  Max capacity
-                  <p className="mt-1 max-w-2xl text-sm text-gray-400">
-                    Limit the number of spots available for your event.
-                  </p>
-                </label>
-                <div className="mt-1 sm:mt-0 sm:col-span-2">
-                  <input
-                    type="number"
-                    name="max-capacity"
-                    id="max-capacity"
-                    min="1"
-                    placeholder="100"
-                    className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border border-gray-300 rounded-md"
-                    value={maxCapacity}
-                    onChange={(e) => setMaxCapacity(e.target.value)}
-                  />
-                </div>
-              </div>
-
+              
               <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
                 <label
                   htmlFor="refundable-deposit"
                   className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-                >
-                  Refundable deposit
-                  <p className="mt-1 max-w-2xl text-sm text-gray-400">
-                    Require a refundable deposit (in MATIC) to reserve one spot
-                    at your event
-                  </p>
+                >Upload Course 
                 </label>
                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                   <input
-                    type="number"
-                    name="refundable-deposit"
-                    id="refundable-deposit"
-                    min="0"
-                    step="any"
-                    inputMode="decimal"
-                    placeholder="0.00"
-                    className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border border-gray-300 rounded-md"
-                    value={refund}
-                    onChange={(e) => setRefund(e.target.value)}
-                  />
-                </div>
-              </div>
-
-              <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
-                <label
-                  htmlFor="event-link"
-                  className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-                >
-                  Event link
-                  <p className="mt-1 max-w-2xl text-sm text-gray-400">
-                    The link for your virtual event
-                  </p>
-                </label>
-                <div className="mt-1 sm:mt-0 sm:col-span-2">
-                  <input
-                    id="event-link"
-                    name="event-link"
                     type="text"
-                    className="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
-                    required
-                    value={eventLink}
-                    onChange={(e) => setEventLink(e.target.value)}
+                    name="content"
+                    id="content"
+                    className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border border-gray-300 rounded-md"
+                    
+                    onChange={(e) => setRefund(e.target.value)}
                   />
                 </div>
               </div>
@@ -281,7 +241,7 @@ export default function CreateEvent() {
                   htmlFor="about"
                   className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                 >
-                  Event description
+                  Course Description
                   <p className="mt-2 text-sm text-gray-400">
                     Let people know what your event is about!
                   </p>
@@ -294,6 +254,47 @@ export default function CreateEvent() {
                     className="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
                     value={eventDescription}
                     onChange={(e) => setEventDescription(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
+                <label
+                  htmlFor="max-capacity"
+                  className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                >
+                  Keywords
+                </label>
+                <div className="mt-1 sm:mt-0 sm:col-span-2">
+                  <input
+                    type="text"
+                    name="keywords"
+                    id="keywords"
+                    className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border border-gray-300 rounded-md"
+        
+                    onChange={(e) => setMaxCapacity(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              
+              
+              <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
+                <label
+                  htmlFor="event-link"
+                  className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                >
+                  External Links
+              
+                </label>
+                <div className="mt-1 sm:mt-0 sm:col-span-2">
+                  <input
+                    id="event-link"
+                    name="event-link"
+                    type="text"
+                    className="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
+                    required
+                    value={courseCID}
+                    onChange={(e) => setcourseCID(e.target.value)}
                   />
                 </div>
               </div>
