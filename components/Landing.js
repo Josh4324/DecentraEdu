@@ -67,6 +67,19 @@ export default function Landing({ children }) {
           </div>
         </div>
       </section>
+      <section className="bg-white">
+        <div className="container m-auto max-w-screen-xl px-7.5 py-5 ">
+          <h2 className="text-2xl font-extrabold text-center">Our Top Courses</h2>
+          <div className="container m-auto grid grid-cols-3 gap-3">
+            <div className="tile bg-amber-500">1</div>
+            <div className="tile bg-amber-500">2</div>
+            <div className="tile bg-amber-500">3</div>
+            <div className="tile bg-amber-500">4</div>
+            <div className="tile bg-amber-500">5</div>
+            <div className="tile bg-amber-500">6</div>
+          </div>
+        </div>
+      </section>
       <section className="py-12">{children}</section>
     </div>
   );
