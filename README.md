@@ -1,5 +1,6 @@
 # Web3RSVP-frontend
 
+[Figma Link](https://www.figma.com/file/30vmhNji66mGJAVqrCLXHR/Untitled?node-id=4%3A586&t=1QwlakI5CyJEKYXG-0)
 ### Fork and clone the repo from Github to work with it locally
 
 1. Click the "Fork" button
