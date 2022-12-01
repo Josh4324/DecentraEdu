@@ -9,6 +9,10 @@ module.exports = {
       fontFamily: {
         serif: ["Space Grotesk", ...defaultTheme.fontFamily.serif],
       },
+      colors: {
+        "hero-color": "#F4F1ED",
+        "below-hero": "#737373",
+      },
     },
   },
   variants: {},
